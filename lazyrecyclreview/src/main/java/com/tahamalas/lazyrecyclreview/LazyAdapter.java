@@ -22,4 +22,7 @@ public abstract class LazyAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.onLoadMore = onLoadMore;
     }
 
+    public void setLastPosition(int lastPosition) {
+        this.lastPosition = lastPosition;
+    }
 }
