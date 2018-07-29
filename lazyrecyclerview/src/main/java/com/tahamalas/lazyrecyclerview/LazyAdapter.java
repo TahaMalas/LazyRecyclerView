@@ -10,12 +10,13 @@ public abstract class LazyAdapter<V extends RecyclerView.ViewHolder> extends Rec
 
     private OnLoadMore onLoadMore;
     private int lastPosition = 3;
+    private boolean keepFetching = true;
 
     @CallSuper
     @Override
     public void onBindViewHolder(@NonNull V holder, int position, @NonNull List<Object> payloads) {
         super.onBindViewHolder(holder, position, payloads);
-        if (position == getItemCount() - lastPosition && onLoadMore != null) {
+        if (position == getItemCount() - lastPosition && onLoadMore != null && keepFetching) {
             onLoadMore.onLoadMore(getItemCount() - 1);
         }
     }
@@ -28,4 +29,11 @@ public abstract class LazyAdapter<V extends RecyclerView.ViewHolder> extends Rec
         this.lastPosition = lastPosition;
     }
 
+    public void stopFetching() {
+        this.keepFetching = false;
+    }
+
+    public void resumeFetching() {
+        this.keepFetching = true;
+    }
 }
